@@ -1,48 +1,57 @@
+parse_header <- function(path){
 
+  extention <- tools::file_ext(path)
+  stopifnot(extention %in% c("csv", "tab", "txt"))
 
-hilda_parse <- function(path){
+  names(data.table::fread(path, nrows = 0))
+}
+
+parse_switch <- function(path, vars){
 
   ext <- tools::file_ext(path)
 
   switch(ext,
 
-         tab      = hilda_parse_tab(path),
-         csv      = hilda_parse_csv(path),
-         dta      = hilda_parse_dta(path),
-         sav      = hilda_parse_sav(path),
-         sas      = hilda_parse_sas(path),
-         sas7bdat = hilda_parse_sas7bdat(path),
+         txt      = parse_txt(path = path, vars = vars),
+         tab      = parse_tab(path = path, vars = vars),
+         csv      = parse_csv(path = path, vars = vars),
+         dta      = parse_dta(path = path, vars = vars),
+         sav      = parse_sav(path = path, vars = vars),
+         sas7bdat = parse_sas7bdat(path = path, vars = vars),
 
-         error("This function only accepts csv, tab, dta, sav, sas and sas7bdat files")
+         error("This function only accepts txt, csv, tab, dta, sav, sas7bdat files")
          )
 
-
 }
 
-
-
-hilda_parse_tab <- function(path){
-  data.table::fread(path)
+parse_txt <- function(path, vars){
+  data.table::fread(path, select = vars, data.table = TRUE)
 }
 
-hilda_parse_csv <- function(path){
-  data.table::fread(path)
+parse_tab <- function(path, vars){
+  data.table::fread(path, select = vars, data.table = TRUE)
 }
 
-hilda_parse_dta <- function(path){
-
+parse_csv <- function(path, vars){
+  data.table::fread(path, select = vars, data.table = TRUE)
 }
 
-hilda_parse_sav <- function(path){
-
+parse_dta <- function(path, vars){
+  data.table::as.data.table(
+    haven::read_dta(path)
+    )[, vars, with = FALSE]
 }
 
-hilda_parse_sas <- function(path){
-
+parse_sav <- function(path, vars){
+  data.table::as.data.table(
+    haven::read_sav(path)
+  )[, vars, with = FALSE]
 }
 
-hilda_parse_sas7bdat <- function(path){
-
+parse_sas7bdat <- function(path, vars){
+  data.table::as.data.table(
+    haven::read_sas(path)
+  )[, vars, with = FALSE]
 }
 
 

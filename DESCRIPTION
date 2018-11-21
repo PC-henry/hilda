@@ -1,11 +1,12 @@
 Package: hilda
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Tools for the Melbourne Institute's HILDA datasets
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author: Henry McMillan
+Maintainer: Henry McMillan <Henry.McMillan@pc.gov.au>
+Description: This packages provides tools for parsing, combining and describing HILDA files.
+ The package leverages the data.table package for fast file parsing and binding. Neither this 
+ package nor it's author are affiliated with the Melbourne Institute or Melbourne University. 
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
