@@ -1,5 +1,4 @@
 
-dictionary <- hilda::dictionary
 
 #' Describe HILDA variables
 #'
@@ -23,7 +22,7 @@ describe <- function(variables){
 
   merge(
     data.table::data.table(name = match_vars(variables)),
-    dictionary,
+    hilda::dictionary,
     by = "name",
     all.x = T
   )
@@ -32,8 +31,8 @@ describe <- function(variables){
 
 
 var_match_list <- data.table::data.table(
-  var   = c(dictionary$name, sapply(c(LETTERS[1:16], ""), function(let) gsub("_", let, dictionary$name))),
-  match = rep(dictionary$name, 18),
+  var   = c(hilda::dictionary$name, sapply(c(LETTERS[1:16], ""), function(let) gsub("_", let, hilda::dictionary$name))),
+  match = rep(hilda::dictionary$name, 18),
   key = c("var", "match")
 )
 
