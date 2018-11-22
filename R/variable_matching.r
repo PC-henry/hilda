@@ -1,4 +1,6 @@
 
+dictionary <- hilda::dictionary
+
 #' Describe HILDA variables
 #'
 #' Matches variable names to data dictionary entries and returns a
@@ -19,7 +21,7 @@ describe <- function(variables){
 
   stopifnot(class(variables) == "character")
 
-  data.table:::merge.data.table(
+  merge(
     data.table::data.table(name = match_vars(variables)),
     dictionary,
     by = "name",
@@ -29,23 +31,20 @@ describe <- function(variables){
 }
 
 
-var_match_list <- data.table:::unique.data.table(
-
-  data.table::data.table(
-    var   = c(dictionary$name, sapply(c(LETTERS[1:16], ""), function(let) gsub("_", let, dictionary$name))),
-    match = rep(dictionary$name, 18),
-    key = c("var", "match")
-  )
-
+var_match_list <- data.table::data.table(
+  var   = c(dictionary$name, sapply(c(LETTERS[1:16], ""), function(let) gsub("_", let, dictionary$name))),
+  match = rep(dictionary$name, 18),
+  key = c("var", "match")
 )
+
 
 match_vars <- function(variables){
 
   stopifnot(is.vector(variables))
   variables <- toupper(as.character(variables))
 
-  data.table:::merge.data.table(
-    data.table(var = variables),
+  merge(
+    data.table::data.table(var = variables),
     var_match_list,
     by = "var",
     all.x = T
