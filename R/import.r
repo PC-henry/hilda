@@ -19,7 +19,7 @@ parse_switch <- function(path, vars){
          sav      = parse_sav(path = path, vars = vars),
          sas7bdat = parse_sas7bdat(path = path, vars = vars),
 
-         error("This function only accepts txt, csv, tab, dta, sav, sas7bdat files")
+         stop("This function only accepts txt, csv, tab, dta, sav, sas7bdat files")
          )
 
 }

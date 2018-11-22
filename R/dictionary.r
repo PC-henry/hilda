@@ -6,6 +6,7 @@
 #' waves where the variable occurs. Information accurate as at
 #' 2018-11-22.
 #'
+#' @docType data
 #' @format A data table with 9297 rows and 5 variables:
 #' \describe{
 #'   \item{name}{Variable name where '_' replaces the wave ID}
