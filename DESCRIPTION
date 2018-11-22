@@ -5,7 +5,7 @@ Version: 0.1.0
 Author: Henry McMillan
 Maintainer: Henry McMillan <Henry.McMillan@pc.gov.au>
 Description: This packages provides tools for parsing, combining and describing HILDA files.
- The package leverages the data.table package for fast file parsing and binding. Neither this 
+ The package leverages the data.table package for fast, memory efficient file parsing and binding. Neither this 
  package nor it's author are affiliated with the Melbourne Institute or Melbourne University. 
 Depends: R (>= 2.1.0)
 License: MIT + file LICENSE
@@ -14,3 +14,4 @@ LazyData: true
 Imports:
     data.table,
     haven
+RoxygenNote: 6.1.0
