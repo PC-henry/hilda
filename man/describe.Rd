@@ -18,7 +18,7 @@ data table of descriptions. The function is not case sensitive and
 matches with or without wave prefixes.
 }
 \examples{
-
+library(hilda)
 describe("XHHRAID")
 describe(c("pmhlyr", "_TIFDIF"))
 }

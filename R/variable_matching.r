@@ -1,5 +1,4 @@
 
-
 #' Describe HILDA variables
 #'
 #' Matches variable names to data dictionary entries and returns a
@@ -12,9 +11,11 @@
 #' @export
 #'
 #' @examples
-#'
+#' library(hilda)
 #' describe("XHHRAID")
 #' describe(c("pmhlyr", "_TIFDIF"))
+#' @import data.table
+
 
 describe <- function(variables){
 
@@ -30,11 +31,13 @@ describe <- function(variables){
 }
 
 
-var_match_list <- data.table::data.table(
+var_match_list <- function(){unique(data.table::data.table(
+
   var   = c(hilda::dictionary$name, sapply(c(LETTERS[1:16], ""), function(let) gsub("_", let, hilda::dictionary$name))),
   match = rep(hilda::dictionary$name, 18),
-  key = c("var", "match")
-)
+  key   = c("var", "match")
+
+))}
 
 
 match_vars <- function(variables){
@@ -44,7 +47,7 @@ match_vars <- function(variables){
 
   merge(
     data.table::data.table(var = variables),
-    var_match_list,
+    var_match_list(),
     by = "var",
     all.x = T
   )[, match]

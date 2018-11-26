@@ -11,6 +11,8 @@ Depends: R (>= 2.10)
 License: MIT + file LICENSE
 Encoding: UTF-8
 Imports:
+    tools,
     data.table,
     haven
 RoxygenNote: 6.1.0
+LazyData: true
