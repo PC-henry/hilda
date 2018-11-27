@@ -48,9 +48,23 @@ match_vars <- function(variables){
   merge(
     data.table::data.table(var = variables),
     var_match_list(),
-    by = "var",
+    by    = "var",
     all.x = T
   )[, match]
+
+}
+
+pattern_match_vars <- function(variables){
+
+  stopifnot(is.vector(variables))
+  variables <- toupper(as.character(variables))
+
+  merge(
+    data.table::data.table(var = variables),
+    var_match_list(),
+    by = "var",
+    all.x = T
+  )[, gsub("_", "", match)]
 
 }
 

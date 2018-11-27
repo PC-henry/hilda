@@ -10,6 +10,7 @@ parse_switch <- function(path, vars){
 
   ext <- tools::file_ext(path)
 
+
   switch(ext,
 
          txt      = parse_txt(path = path, vars = vars),
@@ -29,6 +30,18 @@ parse_txt <- function(path, vars){
 }
 
 parse_tab <- function(path, vars){
+
+  if(!is.null(vars)){
+
+    vars <- grep(
+      pattern     = paste(pattern_match_vars(vars), collapse = "|"),
+      x           = parse_header(path),
+      ignore.case = TRUE,
+      value       = TRUE
+    )
+
+  }
+
   data.table::fread(path, select = vars, data.table = TRUE)
 }
 
@@ -36,22 +49,40 @@ parse_csv <- function(path, vars){
   data.table::fread(path, select = vars, data.table = TRUE)
 }
 
-parse_dta <- function(path, vars){
-  data.table::as.data.table(
-    haven::read_dta(path)
-    )[, vars, with = FALSE]
+parse_dta <- function(path, vars) {
+  if (is.null(vars)) {
+    return(data.table::as.data.table(
+      haven::read_dta(path)
+    ))
+  } else {
+    return(data.table::as.data.table(
+      haven::read_dta(path)
+    )[, vars, with = FALSE])
+  }
 }
 
 parse_sav <- function(path, vars){
-  data.table::as.data.table(
-    haven::read_sav(path)
-  )[, vars, with = FALSE]
+  if (is.null(vars)) {
+    return(data.table::as.data.table(
+      haven::read_sav(path)
+    ))
+  } else {
+    return(data.table::as.data.table(
+      haven::read_sav(path)
+    )[, vars, with = FALSE])
+  }
 }
 
 parse_sas7bdat <- function(path, vars){
-  data.table::as.data.table(
-    haven::read_sas(path)
-  )[, vars, with = FALSE]
+  if (is.null(vars)) {
+    return(data.table::as.data.table(
+      haven::read_sas(path)
+    ))
+  } else {
+    return(data.table::as.data.table(
+      haven::read_sas(path)
+    )[, vars, with = FALSE])
+  }
 }
 
 

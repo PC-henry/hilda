@@ -1,5 +1,4 @@
 
-
 #' Read & combine HILDA files
 #'
 #' This function reads in any HILDA file (SAS, Stata and SPSS included) and merges
@@ -15,38 +14,49 @@
 #' @export
 #'
 #' @examples
-#'
+#'\dontrun{
+#' dt1 <- read.hilda("Eperson_n160u.dta")
+#' dt2 <- read.hilda(
+#'     paths     = c("Combined p160c.tab", "Combined o160c.tab"),
+#'     variables = c("XHHRAID","_alopmt", "hhwte")
+#'  )
+#' }
 
-read.hilda <- function(paths, variables){
+read.hilda <- function(paths, variables = NULL){
 
-  fast_parse <- any(!(
-    tolower(tools::file_ext(paths)) %in% c("csv", "txt", "tab")
-    ))
+  if (Sys.info()["sysname"] == "Windows"){
 
-
-  if(fast_parse){
-
-    return(fast_read_hilda(paths = paths, variables = variables))
+    pbapply::pboptions(type = "win", title = "Parsing HILDA files")
+    hilda_list <- pbapply::pblapply(paths, parse_switch, vars = variables)
 
   } else {
 
-    return(slow_read_hilda(paths = paths, variables = variables))
+    hilda_list <- lapply(paths, parse_switch, vars = variables)
 
   }
-
-}
-
-
-fast_read_hilda <- function(paths, variables){
-
-  NULL
-
-}
+  message(paste0(crayon::green(cli::symbol$tick), " ", crayon::white("Files parsed")))
 
 
-slow_read_hilda <- function(paths, variables){
+  hilda_list <- lapply(hilda_list, function(dt){
 
-  NULL
+    names(dt) <- match_vars(names(dt))
+    return(dt)
+
+  })
+  message(paste0(crayon::green(cli::symbol$tick), " ", crayon::white("Headers cleaned")))
+
+
+  if(length(hilda_list) == 1){
+
+    return(hilda_list[[1]])
+
+  } else {
+
+    hilda_list <- data.table::rbindlist(hilda_list, use.names = TRUE, fill = TRUE)
+    message(paste0(crayon::green(cli::symbol$tick), " ", crayon::white("Datasets merged")))
+    return(hilda_list)
+
+  }
 
 }
 

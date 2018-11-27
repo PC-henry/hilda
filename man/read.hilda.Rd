@@ -4,7 +4,7 @@
 \alias{read.hilda}
 \title{Read & combine HILDA files}
 \usage{
-read.hilda(paths, variables)
+read.hilda(paths, variables = NULL)
 }
 \arguments{
 \item{paths}{a character vector of file paths to HILDA files}
@@ -22,5 +22,11 @@ is designed for HILDA 16 general and restricted and may not function correctly w
 other versions of HILDA.
 }
 \examples{
-
+\dontrun{
+dt1 <- read.hilda("Eperson_n160u.dta")
+dt2 <- read.hilda(
+    paths     = c("Combined p160c.tab", "Combined o160c.tab"),
+    variables = c("XHHRAID","_alopmt", "hhwte")
+ )
+}
 }

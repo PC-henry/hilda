@@ -12,6 +12,9 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Imports:
     tools,
+    cli,
+    crayon,
+    pbapply,
     data.table,
     haven
 RoxygenNote: 6.1.0
