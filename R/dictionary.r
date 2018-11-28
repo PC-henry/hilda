@@ -11,7 +11,7 @@
 #' \describe{
 #'   \item{name}{Variable name where '_' replaces the wave ID}
 #'   \item{description}{Variable description}
-#'   \item{occurance}{Waves where the variable has been recorded}
+#'   \item{occurrence}{Waves where the variable has been recorded}
 #'   \item{category1}{Subject area}
 #'   \item{category2}{Nested area}
 #' }
